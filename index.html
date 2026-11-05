@@ -375,6 +375,59 @@
   .hitnote div { font-weight: 600; font-size: 12px; margin-top: 1px; }
   @media (max-width: 760px) { .hitBanner { top: 60px; } }
   @media (prefers-reduced-motion: reduce) { .pp.shakeP, .hitBanner.show { animation: none; } }
+
+  /* ===== 자동차 테마 장식 (심플 화면 위에) ===== */
+  /* 6. 아주 옅은 아스팔트 바탕과 칸 안쪽 노란 차선 점선 */
+  body { background-color: var(--bg); background-image: radial-gradient(rgba(31,35,40,.05) 1px, transparent 1.2px), radial-gradient(rgba(31,35,40,.035) 1px, transparent 1.2px); background-size: 7px 7px, 11px 11px; background-position: 0 0, 3px 5px; }
+  .pp, .ctrl { position: relative; }
+  .pp::before, .ctrl::before { content: ''; position: absolute; inset: 5px; border: 2px dashed rgba(234,179,8,.35); border-radius: 3px; pointer-events: none; }
+  .pp.turn::before { border-color: rgba(202,138,4,.6); }
+  .pp > *, .ctrl > * { position: relative; }
+  /* 1. 말 상태를 작은 차로 */
+  .pwait { gap: 4px; }
+  .pcar { position: relative; width: 44px; height: 26px; display: inline-flex; align-items: center; justify-content: center; border-radius: 6px; }
+  .pcar svg { width: 40px; height: 23px; overflow: visible; }
+  .pcar .hl { fill: #fde68a; } .pcar .rl { opacity: 0; }
+  .pcar.road { outline: 2px dashed #8a877c; outline-offset: -1px; }
+  .pcar.road svg { opacity: .35; }
+  .pcar.fin svg { opacity: .3; }
+  .pcar.fin b { position: absolute; right: -2px; top: -4px; width: 16px; height: 16px; border-radius: 4px; background: #2563eb; color: #fff; font-size: 11px; line-height: 16px; text-align: center; border: 1.5px solid #fff; }
+  /* 2. 완주 수는 주차 표시와 함께 */
+  .pfin { display: inline-flex; align-items: center; gap: 5px; }
+  .pfin .pk { font-style: normal; width: 20px; height: 20px; border-radius: 4px; background: #2563eb; color: #fff; font-size: 13px; font-weight: 900; display: inline-flex; align-items: center; justify-content: center; }
+  /* 3. 차례 표시에 운전대, AI 차례에는 핸들을 돌림 */
+  .turnbar .wheel { width: 30px; height: 30px; flex: none; }
+  .turnbar.ai .wheel { animation: steer 1.2s ease-in-out infinite; }
+  /* 4. 증강 칸을 계기판 경고등처럼 */
+  .slot.aug { background: #22262c; color: #e5e7eb; border: 1.5px solid #3a3f47; border-radius: 6px; padding: 6px 4px 5px; }
+  .slot.aug::before { content: ''; position: absolute; top: 5px; left: 5px; width: 7px; height: 7px; border-radius: 50%; background: #4b5563; }
+  .slot.aug small { background: rgba(255,255,255,.1); color: #cbd5e1; }
+  .slot.aug.ready { background: #2b2414; border: 2px solid #f59e0b; color: #fde68a; box-shadow: 0 0 10px rgba(245,158,11,.55), inset 0 0 8px rgba(245,158,11,.25); }
+  .slot.aug.ready::before { background: #f59e0b; box-shadow: 0 0 6px #f59e0b; }
+  .slot.aug.sel { background: #10213f; border: 2px solid #60a5fa; color: #dbeafe; box-shadow: 0 0 10px rgba(96,165,250,.5); }
+  .slot.aug.sel::before { background: #60a5fa; box-shadow: 0 0 6px #60a5fa; }
+  .slot.aug.used { opacity: 1; color: #6b7280; background: #1a1d21; }
+  .slot.aug.used small { color: #6b7280; }
+  .slot.aug.flash { animation: dashlamp .9s ease-out; }
+  @keyframes dashlamp { 0%, 45% { background: #3a2a06; border-color: #fbbf24; box-shadow: 0 0 18px rgba(251,191,36,.9); color: #fef3c7; } 100% { } }
+  .slot.empty { background: #2a2e34; color: #4b5563; border-color: #3a3f47; border-radius: 6px; }
+  /* 7. 당했다 배너는 도로 경고 표지판 모양 */
+  .hitBanner { display: flex; align-items: center; gap: 14px; text-align: left; background: #fffbea; border: 3px solid #1f2328; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,.2); padding: 10px 16px 10px 14px; }
+  .hitBanner.hidden { display: none; }
+  .hbSign { flex: none; width: 46px; height: 46px; display: flex; align-items: center; justify-content: center; }
+  .hbSign span { width: 34px; height: 34px; transform: rotate(45deg); background: #facc15; border: 3px solid #1f2328; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 22px; color: #1f2328; }
+  .hbSign span::after { content: ''; }
+  .hbSign span { font-size: 0; }
+  .hbSign span::before { content: '!'; transform: rotate(-45deg); font-size: 22px; }
+  .hbTop { color: #1f2328; text-align: left; }
+  .hbAug { justify-content: flex-start; }
+  .hbText { text-align: left; }
+  @media (max-width: 760px) {
+    .pcar { width: 34px; height: 20px; } .pcar svg { width: 31px; height: 18px; }
+    .pfin .pk { width: 16px; height: 16px; font-size: 11px; }
+    .turnbar .wheel { width: 22px; height: 22px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .turnbar.ai .wheel { animation: none; } }
 </style>
 </head>
 <body>
@@ -390,6 +443,7 @@
   <section class="col mid">
     <div class="turnbar" id="turnBox">
       <span class="tdot" id="turnDot"></span>
+      <svg class="wheel" viewBox="-16 -16 32 32"><circle r="13" fill="none" stroke="#1f2328" stroke-width="4"/><circle r="4" fill="#1f2328"/><path d="M-12 1 L-4 1 M4 1 L12 1 M0 4 L0 12" stroke="#1f2328" stroke-width="4" stroke-linecap="round"/></svg>
       <span class="turntext" id="turnIndicator">-</span>
       <span class="round">라운드 <b id="roundCounter">1</b> <span id="modeLabel"></span></span>
     </div>
@@ -478,6 +532,7 @@
     <div style="font-weight:900">인원</div>
     <div class="seg"><button data-n="2" onclick="setPlayers(2)">2인</button><button data-n="4" onclick="setPlayers(4)">4인</button></div>
     <div class="seg"><button data-team="0" onclick="setTeamMode(false)">개인전</button><button data-team="1" onclick="setTeamMode(true)">팀전 (4인 2대2)</button></div>
+    <label id="allyKillRow" class="hidden" style="display:flex;align-items:center;gap:8px;font-weight:800;font-size:14px"><input type="checkbox" id="allyKill" onchange="setAllyKill(this.checked)" style="width:20px;height:20px"> 팀원 말도 잡을 수 있게 (팀원 칸에서 업기와 잡기 중 선택)</label>
     <div id="setupDesc" style="font-size:12px;color:#475569;font-weight:700;line-height:1.45"></div>
     <button class="bigbtn yellow" onclick="startAiGame()">AI와 레이스</button>
     <div style="border-top:2px dashed #cbd5e1;padding-top:12px;display:flex;flex-direction:column;gap:10px">
@@ -532,7 +587,7 @@
       <p><b>선 정하기:</b> 게임을 시작하면 인원 수만큼 섞인 카드 중 하나씩 동시에 고릅니다. 선 카드를 뽑은 사람부터 자리 순서대로 진행합니다.</p>
       <p><b>증강:</b> 게임 시작 전, 5라운드 종료 후, 10라운드 종료 후 세 번 선택합니다. 50라운드가 끝나면 주차한 차가 많은 쪽, 같으면 더 많이 달린 쪽이 승리합니다.</p>
       <p><b>4인 개인전:</b> 1번부터 차례대로 운전하고 먼저 4대를 모두 주차한 사람이 승리합니다. 누구의 차든 같은 칸에 멈추면 추월 충돌입니다. 증강의 패배 효과는 그 사람만 탈락시키고 마지막 한 명이 남으면 그 사람이 승리합니다.</p>
-      <p><b>4인 팀전:</b> 파랑과 하늘이 블루 팀, 빨강과 주황이 레드 팀이며 차례는 두 팀이 번갈아 진행합니다. 같은 편 차가 있는 칸에 멈추면 군집주행으로 함께 움직이고 팀 차 8대를 먼저 모두 주차한 팀이 승리합니다. 증강의 패배 효과는 팀 패배입니다.</p>
+      <p><b>4인 팀전:</b> 파랑과 하늘이 블루 팀, 빨강과 주황이 레드 팀이며 차례는 두 팀이 번갈아 진행합니다. 같은 편 차가 있는 칸에 멈추면 군집주행으로 함께 움직이고 팀 차 8대를 먼저 모두 주차한 팀이 승리합니다. 증강의 패배 효과는 팀 패배입니다. 시작 화면에서 "팀원 말도 잡을 수 있게"를 켜면 팀원 말이 있는 칸에 멈출 때 업기와 팀원 잡기 중에 고를 수 있습니다.</p>
       <p><b>증강:</b> 나무위키 증강 윷놀이 목록을 기준으로 AI전에서 처리할 수 있는 63개를 넣었습니다 (투표, 판 접기, 돌림판, 안개, 색 맞히기, 알까기, 순위 맞히기, 동메달, 취~소는 제외). 4인 개인전과 팀전은 원문 효과 그대로이고 2인에서는 상대가 한 명뿐이라 지나치게 강한 5개(3단 합체 필살기, 거머리, 이도류, 나만 친구 없어, 네크로맨서)는 나오지 않고 11개는 효과가 조정됩니다.</p>
     </div>
   </div>
@@ -825,6 +880,7 @@ function newState(setup) {
     echo: false, echoRepeated: false, poops: [], marks: [], challenges: [],
     dance: null, poison: false, turnCounts: {}, chain: false,
     n, mode, order, seats, team, names: s.names || defaultNames(n, mode, seats),
+    allyKill: mode === 'team' && !!s.allyKill, // 팀전 옵션: 팀원 말도 잡을 수 있음
     traps: [], rewards: [], draftBan: [], pieceSeq: 10, winners: [],
     p
   };
@@ -1056,6 +1112,13 @@ function applyOption(pid, resultIdx, opt) {
   if (mv.finished) {
     finishPieces(pid, movers);
   } else {
+    // 팀원 잡기 (팀전 옵션): 도착 칸의 팀원 말을 업지 않고 잡음
+    let allyKilled = 0;
+    if (opt.allyKill && G.allyKill) {
+      allies(pid).filter(q => q !== pid).forEach(q => { const ps = piecesAt(q, mv.dest); if (ps.length && !G.gameOver) { allyKilled += killPieces(q, ps, pid); } });
+      if (G.gameOver) return;
+      if (allyKilled) { logMessage(`${who(pid)}가 팀원 말 ${allyKilled}개를 잡았습니다${r.val >= 4 ? '' : ' (한 번 더)'}`); if (r.val < 4) G.actionsLeft++; }
+    }
     movers.forEach(p => { p.node = mv.dest; p.history = mv.history.slice(); });
     const how = opt.alt ? `${r.name} 대신 ${opt.val < 0 ? '백도' : '도'}(도깨비)` : gearLabel(r.name);
     logMessage(`${who(pid)} ${how}로 ${movers.length > 1 ? movers.length + '개 업고' : '말'} 이동 → ${nodeName(mv.dest)}`);
@@ -2036,6 +2099,7 @@ function setPlayers(n) {
   renderSetup();
 }
 function setTeamMode(team) { if (SETUP.n === 4) SETUP.mode = team ? 'team' : 'solo'; renderSetup(); }
+function setAllyKill(on) { SETUP.allyKill = !!on; renderSetup(); }
 function renderSetup() {
   document.querySelectorAll('[data-n]').forEach(b => b.classList.toggle('on', +b.dataset.n === SETUP.n));
   document.querySelectorAll('[data-team]').forEach(b => {
@@ -2043,6 +2107,8 @@ function renderSetup() {
     b.classList.toggle('on', (SETUP.mode === 'team') === t);
     b.disabled = t && SETUP.n !== 4;
   });
+  const ak = document.getElementById('allyKillRow');
+  if (ak) { ak.classList.toggle('hidden', SETUP.mode !== 'team'); document.getElementById('allyKill').checked = !!SETUP.allyKill; }
   const d = document.getElementById('setupDesc');
   if (d) d.textContent = SETUP.n === 2 ? '1대1 레이스. 2인용 증강 (지나치게 강한 5개는 빠지고 11개는 효과 조정)' :
     SETUP.mode === 'team' ? '2대2 팀전 (파랑+하늘 대 빨강+주황). 같은 편끼리 군집주행, 팀 차 8대를 먼저 모두 주차하면 승리. 증강은 4인 기본' :
@@ -2053,7 +2119,7 @@ function startAiGame() {
   closeNet();
   MODE = 'ai'; ME = 1;
   const seats = {}; for (let p = 1; p <= SETUP.n; p++) seats[p] = p === 1 ? 'human' : 'ai';
-  SETUP = { n: SETUP.n, mode: SETUP.mode, seats, names: null };
+  SETUP = { n: SETUP.n, mode: SETUP.mode, allyKill: SETUP.allyKill, seats, names: null };
   showModal('lobbyModal', false);
   restartGame();
 }
@@ -2062,7 +2128,7 @@ function createRoom() {
   if (!peerReady()) return;
   closeNet();
   NET.code = makeCode();
-  NET.hostSetup = { n: SETUP.n, mode: SETUP.mode };
+  NET.hostSetup = { n: SETUP.n, mode: SETUP.mode, allyKill: !!SETUP.allyKill };
   NET.hostPid = 1; NET.ready = {}; NET.hostName = myName();
   lobbyStatus('방을 만드는 중...');
   const peer = new Peer(PEER_PREFIX + NET.code, { debug: 0 });
@@ -2193,7 +2259,7 @@ function startOnlineGame() {
   }
   NET.started = true; NET.connected = true;
   MODE = 'host'; ME = NET.hostPid;
-  SETUP = { n, mode, seats, names };
+  SETUP = { n, mode, seats, names, allyKill: NET.hostSetup.allyKill };
   startHeartbeat();
   showModal('lobbyModal', false);
   restartGame();
@@ -2399,6 +2465,7 @@ function performAction(pid, a) {
         const o = optionsFor(pid, val).find(x => (pc.node === null ? x.type === 'spawn' : x.type === 'move' && x.from === pc.node)
           && (st.alt === null || st.alt === undefined ? !x.alt : x.alt && x.val === st.alt));
         if (!o) break;
+        if (a.allyKill && st === a.steps[a.steps.length - 1]) o.allyKill = true; // 마지막 도착 칸에서 팀원 잡기
         applyOption(pid, idx, o);
       }
       return;
@@ -2982,11 +3049,11 @@ function fxCommit() {
 const _applyOption = applyOption;
 applyOption = function (pid, resultIdx, opt) {
   if (!TEST && G && G.queue[resultIdx] && opt) {
-    const movers = opt.type === 'spawn' ? [spawnPiece(pid)] : piecesAt(pid, opt.from);
+    const movers = opt.type === 'spawn' ? [spawnPiece(pid)] : groupAt(pid, opt.from);
     if (movers.length && movers[0]) {
       const ev = { kind: 'move', pid, ids: movers.map(p => p.id), from: opt.type === 'spawn' ? 'wait' : opt.from,
         path: opt.mv.path.slice(), back: opt.val < 0 || effectiveVal(pid, opt.val) < 0, end: opt.mv.finished ? 'fin' : opt.mv.dest,
-        stack: !opt.mv.finished && piecesAt(pid, opt.mv.dest).length > 0 && !has(pid, 'cannibal') };
+        stack: !opt.mv.finished && !opt.allyKill && (has(pid, 'cannibal') ? allies(pid).some(q => q !== pid && piecesAt(q, opt.mv.dest).length) : groupAt(pid, opt.mv.dest).length > 0) };
       if (MODE === 'host') netSend({ type: 'fx', ev });
       fxEnqueue(ev);
     }
@@ -3353,13 +3420,17 @@ function allRoutes() {
 // 도착 칸의 종류: 업기(내 말 있음), 잡기(적 말 있음), 완주, 그냥 이동
 function routeKind(r) {
   if (r.dest === 'FIN') return 'finish';
+  if (r.allyKill) return 'kill';
   if (hittable(ME, r.dest).length) return 'kill';
   if (groupAt(ME, r.dest).length) return 'stack';
   return 'move';
 }
 const needsConfirm = r => ['stack', 'kill'].includes(routeKind(r));
 const stepText = r => r.steps.map(x => x.alt === null ? gearLabel(x.name) : `${x.name}→${x.alt < 0 ? '백도' : '도'}(도깨비)`).join(' + ');
-function sendRoute(r) { uiChoice = null; uiStackMode = false; act({ type: 'route', from: r.from, steps: r.steps }); }
+function sendRoute(r) { uiChoice = null; uiStackMode = false; act({ type: 'route', from: r.from, steps: r.steps, allyKill: !!r.allyKill }); }
+// 팀원 말이 있는 칸: 팀전 옵션이 켜져 있으면 업기와 팀원 잡기 둘 다 고를 수 있음
+const allyHere = dest => dest !== 'FIN' && G.allyKill && allies(ME).some(q => q !== ME && piecesAt(q, dest).length);
+function withAllyKill(list) { return list.reduce((a, r) => a.concat(allyHere(r.dest) && !hittable(ME, r.dest).length ? [r, { ...r, allyKill: true }] : [r]), []); }
 function stackOptions() { return myTurnReady() ? allRoutes().filter(r => routeKind(r) === 'stack') : []; }
 function onStackClick() {
   const list = stackOptions();
@@ -3384,7 +3455,7 @@ function onNodeClick(hit) {
   }
   if (G.chain) { logMessage('윷이나 모가 나와 한 번 더 던져야 합니다', true); return; }
   if (!G.queue.length) return;
-  let list = allRoutes().filter(r => r.dest === hit);
+  let list = withAllyKill(allRoutes().filter(r => r.dest === hit));
   if (uiStackMode) { uiStackMode = false; list = list.filter(r => routeKind(r) === 'stack'); }
   if (!list.length) {
     if (hit === 'FIN') logMessage('지금 나온 결과로는 완주할 수 있는 말이 없습니다', true);
@@ -3398,7 +3469,7 @@ function onNodeClick(hit) {
 function popupLabel(r) {
   const k = routeKind(r);
   const src = r.from === null ? '대기 말' : `${nodeName(r.from)} 말`;
-  const icon = k === 'finish' ? '🅿 완주' : k === 'stack' ? '🔗 업기' : k === 'kill' ? '💥 잡기' : '이동';
+  const icon = k === 'finish' ? '🅿 완주' : r.allyKill ? '💥 팀원 잡기' : k === 'stack' ? (allyHere(r.dest) ? '🔗 팀원과 업기' : '🔗 업기') : k === 'kill' ? '💥 잡기' : '이동';
   return `${icon}: ${src} (${stepText(r)})`;
 }
 function renderBoardPopup() {
@@ -3552,13 +3623,18 @@ function panelHTML(pid) {
   if (P2.out) tags.push('<span>탈락</span>');
   if (G.p[pid].sticks !== 4 || has(pid, 'greed')) tags.push(`<span>윷 ${stickCount(pid)}개</span>`);
   const col = pidColor(pid);
-  const pcs = P2.pieces.map(p => p.finished ? `<span class="pc fin" style="background:${col}">✓</span>` : p.node === null ? `<span class="pc" style="background:${col}"></span>` : `<span class="pc road" style="border-color:${col}"></span>`).join('');
+  // 말 상태를 작은 차로: 주유소 대기(진하게), 도로 위(점선 테두리, 흐리게), 주차 완료(🅿)
+  const pcs = P2.pieces.map((p, i) => {
+    const st = p.finished ? 'fin' : p.node === null ? 'wait' : 'road';
+    const tip = st === 'fin' ? '주차 완료' : st === 'wait' ? '주유소 대기' : `도로 위 ${nodeName(p.node)}`;
+    return `<span class="pcar ${st}" title="${tip}"><svg viewBox="-21 -12 42 24">${carShape(pid, i % 4)}</svg>${st === 'fin' ? '<b>P</b>' : ''}</span>`;
+  }).join('');
   const slots = P2.augments.map(a => slotHTML(pid, a));
   while (slots.length < 3) slots.push('<div class="slot empty">—</div>');
   const lh = lastHit[pid], fresh = lh && Date.now() - lh.t < 6000, shake = lh && Date.now() - lh.t < 900;
   const note = fresh ? `<div class="hitnote">⚠ ${AUG(lh.id) ? AUG(lh.id).name : ''} <small>← ${who(lh.a)}</small><div>${lh.text}</div></div>` : '';
   return `<div class="pp${G.turn === pid && !G.gameOver ? ' turn' : ''}${P2.out ? ' out' : ''}${fresh ? ' hit' : ''}${shake ? ' shakeP' : ''}">
-    ${note}<div class="pph"><span class="pdot" style="background:${col}"></span><span class="pname">${name}</span><span class="pfin">${finishedCount(pid)} / ${pieceCount(pid)}</span></div>
+    ${note}<div class="pph"><span class="pdot" style="background:${col}"></span><span class="pname">${name}</span><span class="pfin" title="주차 완료"><i class="pk">P</i>${finishedCount(pid)} / ${pieceCount(pid)}</span></div>
     ${tags.length ? `<div class="ptags">${tags.join('')}</div>` : ''}
     <div class="pwait">${pcs}</div>
     <div class="pslots">${slots.join('')}</div></div>`;
@@ -3612,7 +3688,7 @@ function nextHitBanner() {
   if (!box || !h) { hitShowing = false; if (box) box.classList.add('hidden'); return; }
   hitShowing = true;
   const a = AUG(h.augId);
-  box.innerHTML = `<div class="hbTop">⚠ 당했습니다!</div><div class="hbAug"><span class="pdot" style="background:${pidColor(h.attacker)}"></span>${who(h.attacker)}의 <b>${a ? a.name : ''}</b></div><div class="hbText">${h.text}</div>`;
+  box.innerHTML = `<div class="hbSign"><span>!</span></div><div class="hbBody"><div class="hbTop">당했습니다!</div><div class="hbAug"><span class="pdot" style="background:${pidColor(h.attacker)}"></span>${who(h.attacker)}의 <b>${a ? a.name : ''}</b></div><div class="hbText">${h.text}</div></div>`;
   box.classList.remove('hidden', 'show'); void box.offsetWidth; box.classList.add('show');
   setTimeout(nextHitBanner, 2600);
 }
