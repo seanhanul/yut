@@ -76,15 +76,7 @@
     .dash { grid-template-columns: 1fr 1fr; }
     .dash-center { grid-column: 1 / -1; order: -1; }
   }
-  @media (max-width: 520px) {
-    body { padding: 6px; }
-    .dash { grid-template-columns: 1fr; padding: 8px; }
-    .gauge .meters { grid-template-columns: repeat(4, 1fr); }
-    .meter b { font-size: 17px; }
-    .gauge.mini .who { min-width: 80px; }
-    #logContainer { height: 74px; }
-    .dash-center .logo { font-size: 18px; }
-  }
+
 
   /* 운전 조작부 */
   .gearline { display: flex; justify-content: space-between; align-items: center; font-weight: 900; font-size: 13px; }
@@ -231,7 +223,62 @@
   .seat i { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
 
   @media (prefers-reduced-motion: reduce) { .pcard.riffle, .blinkring, .turnbox.ai .wheel, #stackBtn.on, .checker { animation: none; } }
-</style>
+  /* ===== 모바일: 게임판을 맨 위로, 나머지는 판 아래로 ===== */
+  @media (max-width: 760px) {
+    body { padding: 0 0 12px; display: flex; flex-direction: column; gap: 8px; }
+    .dash, .layout { display: contents; }
+    /* 맨 위 얇은 상단 바: 로고, 차례, 라운드, 도구 */
+    .dash-center { order: 1; position: sticky; top: 0; z-index: 30; display: flex; flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 8px;
+      background: linear-gradient(180deg, #1f2937, #0b1220); color: #e5e7eb; padding: 8px 10px; border-bottom: 3px solid var(--line); min-width: 0; }
+    .dash-center .logo { font-size: 17px; text-shadow: none; }
+    .dash-center .sub { display: none; }
+    .turnbox { flex: 1; min-width: 0; padding: 2px 10px 2px 4px; }
+    .turnbox .wheel { width: 22px; height: 22px; }
+    .turntext { font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .round { font-size: 11px; white-space: nowrap; }
+    .tools { width: 100%; display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; }
+    .tool { min-height: 30px; padding: 4px 2px; font-size: 11px; border-radius: 8px; }
+    /* 게임판: 화면 폭 가득 */
+    .board-panel { display: contents; }
+    .board-box { order: 2; width: calc(100% - 12px); margin: 0 6px; border: 3px solid var(--line); border-radius: 16px; box-shadow: 0 4px 0 rgba(15,23,42,.45); background: var(--panel); }
+    #board { border-radius: 12px; }
+    .legend { order: 4; margin: -2px 10px 0; padding: 0; font-size: 11px; gap: 4px 10px; }
+    .legend > span:not(#legendPlayers) { display: none; }
+    #logContainer { order: 7; margin: 0 6px; height: 90px; font-size: 11px; padding: 6px 8px; }
+    /* 판 바로 아래 운전석: 던지기와 결과 */
+    #controlPanel { order: 3; margin: 0 6px; padding: 10px; gap: 8px; border-radius: 16px; }
+    #controlPanel .gearline { font-size: 12px; }
+    .tbtn { min-height: 48px; font-size: 16px; }
+    #yutQueue { min-height: 44px; }
+    #stackBtn { min-height: 40px; font-size: 13px; }
+    #hintText { font-size: 11px; min-height: 0; }
+    .augs { max-height: none; }
+    /* 계기판은 그 아래에 한 줄씩 */
+    #gaugeMe { order: 5; margin: 0 6px; }
+    #oppGauges { order: 6; margin: 0 6px; }
+    #gaugeMe > .gauge { padding: 4px 8px; gap: 3px; flex-direction: row; align-items: center; background: #0f172a; }
+    #gaugeMe > .gauge .who { font-size: 12px; min-width: 88px; flex: none; color: #e5e7eb; }
+    #gaugeMe > .gauge .meters { flex: 1; gap: 3px; }
+    #gaugeMe .meter, .gauge.mini .meter { padding: 1px; display: flex; align-items: baseline; justify-content: center; gap: 3px; }
+    #gaugeMe .meter b, .gauge.mini .meter b { font-size: 14px; display: inline; }
+    #gaugeMe .meter span, .gauge.mini .meter span { font-size: 9px; }
+    .gauge.mini { color: #e5e7eb; }
+    .gauge.mini .who { min-width: 88px; }
+    .layout > .panel:last-child { order: 8; margin: 0 6px; border-radius: 16px; }
+    /* 팝업 창 */
+    .overlay { padding: 8px; }
+    .card { padding: 14px; border-radius: 18px; }
+    .card h2 { font-size: 19px; margin: 2px 0 8px; }
+    .draft-grid { gap: 8px; }
+    .dcard { padding: 10px; gap: 4px; box-shadow: 0 3px 0 var(--line); }
+    .dcard .nm { font-size: 15px; }
+    .pcard { width: 70px; height: 100px; }
+    #boardPopup { min-width: 150px; max-width: 92vw; }
+    #boardPopup button { font-size: 12px; padding: 7px 9px; min-height: 36px; white-space: normal; }
+    .gear-label { font-size: 34px; }
+    #yutSticks { height: 96px; gap: 12px; }
+    .stick { width: 18px; height: 80px; }
+  }</style>
 </head>
 <body>
 
